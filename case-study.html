@@ -15,14 +15,14 @@
   <main>
     <section class="case-hero" id="summary">
       <span class="eyebrow">Portfolio case study</span>
-      <h1>Creator-Partnership Phishing Email Investigation</h1>
-      <p class="lead">An evidence-led analysis of an email claiming to represent Shure Media, including header validation, IOC enrichment, Microsoft Defender scope hunting and user-impact review.</p>
+      <h1>Creator Partnership Phishing Email Investigation</h1>
+      <p class="lead">An evidence led analysis of an email claiming to represent Shure Media, including header validation, IOC enrichment, Microsoft Defender scope hunting and user impact review.</p>
       <div class="badge-row"><span>Likely phishing</span><span>Medium confidence</span><span>Severity: Medium</span><span>No confirmed compromise</span></div>
     </section>
 
     <section class="section">
       <div class="section-heading"><h2>Executive summary</h2></div>
-      <p>The email used a partnership and sponsorship lure, a Gmail sender address, Shure branding and a call-to-action link hosted on <code>shor[.]by</code>. SPF and DKIM passed, but authentication only proved that Gmail authorised the sender—not that the sender represented Shure. No malicious URL reputation, credential submission, malware execution or account compromise was confirmed.</p>
+      <p>The email used a partnership and sponsorship lure, a Gmail sender address, Shure branding and a call to action link hosted on <code>shor[.]by</code>. SPF and DKIM passed, but authentication only proved that Gmail authorised the sender—not that the sender represented Shure. No malicious URL reputation, credential submission, malware execution or account compromise was confirmed.</p>
       <p>The recipient confirmed that the message was opened and read. Microsoft Defender searches found no matching email or click telemetry, likely because the mailbox was outside the monitored tenant. The final verdict remained <strong>Likely Phishing</strong> with <strong>Medium Confidence</strong>.</p>
     </section>
 
@@ -37,7 +37,7 @@
         <div><strong>Attachments</strong><span>None</span></div>
         <div><strong>VirusTotal</strong><span>0 detections; live HTTP 200</span></div>
         <div><strong>User statement</strong><span>Email opened; link not clicked</span></div>
-        <div><strong>Defender scope</strong><span>No matching telemetry in 35-day search</span></div>
+        <div><strong>Defender scope</strong><span>No matching telemetry in 35 day search</span></div>
         <div><strong>Confirmed impact</strong><span>None identified</span></div>
       </div>
     </section>
@@ -46,17 +46,17 @@
       <div class="section-heading"><h2>5Ws and 1H</h2></div>
       <div class="report-grid">
         <article class="card"><h3>Who</h3><p>Unknown external sender using the display name “Shure Media”; known recipient was a MyDFIR mailbox.</p></article>
-        <article class="card"><h3>What</h3><p>A sponsorship-themed email encouraged access to an external “Creator Dashboard”.</p></article>
+        <article class="card"><h3>What</h3><p>A sponsorship themed email encouraged access to an external “Creator Dashboard”.</p></article>
         <article class="card"><h3>When</h3><p>Sent 26 May 2026 20:23:39 +0300 and received 26 May 2026 13:23:54 -0400.</p></article>
         <article class="card"><h3>Where</h3><p>Email channel, recipient mailbox and external CTA infrastructure at <code>shor[.]by</code>.</p></article>
         <article class="card"><h3>Why</h3><p>Exact objective unknown. The observable goal was to persuade the user to interact with external infrastructure.</p></article>
-        <article class="card"><h3>How</h3><p>Brand association, financial incentive, trust-building language and a prominent CTA link.</p></article>
+        <article class="card"><h3>How</h3><p>Brand association, financial incentive, trust building language and a prominent CTA link.</p></article>
       </div>
     </section>
 
     <section class="section alt">
-      <div class="section-heading"><h2>Scope-hunting evidence</h2><p>Three Defender Advanced Hunting searches were completed for subject, sender and related campaign themes. All returned no results.</p></div>
-      <div class="code-card"><div class="code-title"><span>Campaign-theme search</span><button data-copy="#cq">Copy</button></div><pre id="cq"><code>EmailEvents
+      <div class="section-heading"><h2>Scope hunting evidence</h2><p>Three Defender Advanced Hunting searches were completed for subject, sender and related campaign themes. All returned no results.</p></div>
+      <div class="code-card"><div class="code-title"><span>Campaign theme search</span><button data-copy="#cq">Copy</button></div><pre id="cq"><code>EmailEvents
 | where Timestamp &gt; ago(35d)
 | where SenderFromDomain =~ "gmail.com"
 | where Subject has_any ("Collab", "Creator", "Partnership", "Shure")
@@ -68,22 +68,22 @@
     <section class="section" id="lessons">
       <div class="section-heading"><h2>Lessons learned</h2></div>
       <div class="steps compact">
-        <article class="step"><span class="step-number">01</span><h3>Authentication is not legitimacy</h3><p>SPF and DKIM can pass for attacker-controlled Gmail accounts.</p></article>
-        <article class="step"><span class="step-number">02</span><h3>Unknown is not malicious</h3><p>Threat-intelligence results must be recorded exactly as returned.</p></article>
+        <article class="step"><span class="step-number">01</span><h3>Authentication is not legitimacy</h3><p>SPF and DKIM can pass for attacker controlled Gmail accounts.</p></article>
+        <article class="step"><span class="step-number">02</span><h3>Unknown is not malicious</h3><p>Threat intelligence results must be recorded exactly as returned.</p></article>
         <article class="step"><span class="step-number">03</span><h3>Scope every alert</h3><p>Negative search results are still evidence when queries and limitations are documented.</p></article>
         <article class="step"><span class="step-number">04</span><h3>Separate actions from recommendations</h3><p>Analyst tasks belong under actions taken; recommendations should improve lasting controls.</p></article>
-        <article class="step"><span class="step-number">05</span><h3>Defang IOCs</h3><p>Every indicator in a report should be rendered non-clickable to prevent accidental interaction.</p></article>
+        <article class="step"><span class="step-number">05</span><h3>Defang IOCs</h3><p>Every indicator in a report should be rendered non clickable to prevent accidental interaction.</p></article>
       </div>
     </section>
 
     <section class="section alt">
-      <div class="section-heading"><h2>Control-focused recommendations</h2></div>
+      <div class="section-heading"><h2>Control focused recommendations</h2></div>
       <ol class="recommendations">
-        <li>Strengthen email controls for display-name and brand impersonation from free-mail providers.</li>
-        <li>Alert on external CTA links using redirect or short-link services when paired with sponsorship, partnership or creator-program themes.</li>
+        <li>Strengthen email controls for display name and brand impersonation from free mail providers.</li>
+        <li>Alert on external CTA links using redirect or short link services when paired with sponsorship, partnership or creator program themes.</li>
         <li>Provide targeted awareness guidance for influencer, collaboration and sponsorship lures.</li>
-        <li>Maintain a repeatable scope-hunting procedure and retain query evidence with each phishing case.</li>
-        <li>Require IOC defanging in SOC reports, tickets, emails and knowledge-base articles.</li>
+        <li>Maintain a repeatable scope hunting procedure and retain query evidence with each phishing case.</li>
+        <li>Require IOC defanging in SOC reports, tickets, emails and knowledge base articles.</li>
       </ol>
     </section>
   </main>
