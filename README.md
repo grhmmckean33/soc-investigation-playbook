@@ -19,6 +19,6 @@ The repository also includes a complete phishing investigation case study demons
 
 The complete interactive playbook is available here:
 
-👉 https://yourusername.github.io/soc-investigation-playbook/
+👉 https://grhmmckean33.github.io/soc-investigation-playbook/
 
 This site contains the full investigation methodology, process diagrams, case study, and supporting documentation.
