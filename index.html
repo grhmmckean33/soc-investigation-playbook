@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical SOC investigation playbook and portfolio case study covering triage, email analysis, IOC enrichment, scope hunting, user activity, reporting and response.">
+  <title>SOC Investigation Playbook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="topbar">
+    <div class="brand"><span class="brand-icon">🛡️</span><span>SOC Investigation Playbook</span></div>
+    <nav aria-label="Primary navigation">
+      <a href="#overview">Overview</a>
+      <a href="#process">Process</a>
+      <a href="#tools">Tools</a>
+      <a href="#case-study">Case study</a>
+      <a href="#reporting">Reporting</a>
+    </nav>
+    <a class="button button-small" href="https://github.com/grhmmckean33/soc-phishing-playbook" target="_blank" rel="noopener">View GitHub</a>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="overview">
+      <div class="hero-copy">
+        <span class="eyebrow">Junior SOC Analyst Portfolio Project</span>
+        <h1>SOC Email Investigation Playbook</h1>
+        <p class="lead">A repeatable, evidence-led workflow for investigating suspicious emails from alert receipt through scope hunting, user-impact validation, response and final reporting.</p>
+        <div class="hero-actions">
+          <a class="button" href="#process">Start the playbook</a>
+          <a class="button button-ghost" href="case-study.html">View portfolio case study</a>
+        </div>
+        <div class="stats" aria-label="Project highlights">
+          <div><strong>15</strong><span>Investigation stages</span></div>
+          <div><strong>5</strong><span>Evidence categories</span></div>
+          <div><strong>KQL</strong><span>Scope hunting examples</span></div>
+          <div><strong>MITRE</strong><span>ATT&CK mapping</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="assets/images/phishing-process-9x16.png" alt="Colourful vertical infographic showing the phishing email investigation process from alert receipt to reporting and lessons learned.">
+      </div>
+    </section>
+
+    <section class="section intro-grid">
+      <article class="card"><span class="card-icon">🎯</span><h2>Purpose</h2><p>Provide a clear routine that reduces missed evidence and prevents assumptions from becoming findings.</p></article>
+      <article class="card"><span class="card-icon">👥</span><h2>Audience</h2><p>Junior SOC analysts, cyber-security students, blue-team trainees and portfolio reviewers.</p></article>
+      <article class="card"><span class="card-icon">🔎</span><h2>Core focus</h2><p>Email headers, sender legitimacy, content, IOCs, threat intelligence, scope and user activity.</p></article>
+      <article class="card"><span class="card-icon">✅</span><h2>Outcome</h2><p>A defensible classification, documented evidence, verified response actions and actionable recommendations.</p></article>
+    </section>
+
+    <section class="section" id="process">
+      <div class="section-heading">
+        <span class="eyebrow">Investigation process</span>
+        <h2>Follow the evidence from alert to closure</h2>
+        <p>Complete each phase in order. Record what was checked, the source of the evidence, the result, and any limitations.</p>
+      </div>
+      <div class="flow" aria-label="High-level investigation flow">
+        <div><span>1</span><strong>Detect</strong><small>Alert or user report</small></div><b>→</b>
+        <div><span>2</span><strong>Preserve</strong><small>Raw email and headers</small></div><b>→</b>
+        <div><span>3</span><strong>Analyse</strong><small>Headers, content and IOCs</small></div><b>→</b>
+        <div><span>4</span><strong>Hunt</strong><small>Scope and user activity</small></div><b>→</b>
+        <div><span>5</span><strong>Respond</strong><small>Contain and recover</small></div><b>→</b>
+        <div><span>6</span><strong>Report</strong><small>Findings and recommendations</small></div>
+      </div>
+
+      <div class="steps">
+        <article class="step"><span class="step-number">01</span><h3>Initial triage</h3><p>Confirm the alert source, affected mailbox, subject, sender, timestamps, delivery status and user report details.</p><h4>Questions</h4><ul><li>Was the email delivered, junked, quarantined or rejected?</li><li>Who reported it and when?</li><li>What is the initial severity and why?</li></ul><div class="output">Output: Triage notes and investigation plan</div></article>
+        <article class="step"><span class="step-number">02</span><h3>Preserve evidence</h3><p>Save the original <code>.eml</code> or <code>.msg</code>, full headers, body, screenshots, URLs and attachments.</p><h4>Rule</h4><ul><li>Do not rely on screenshots alone.</li><li>Maintain the original message unchanged.</li><li>Record where evidence is stored.</li></ul><div class="output">Output: Evidence package</div></article>
+        <article class="step"><span class="step-number">03</span><h3>Header analysis</h3><p>Review sender identity, routing and authentication evidence.</p><h4>Check</h4><ul><li>From, Return-Path and Reply-To</li><li>SPF, DKIM, DMARC and ARC</li><li>Received chain, IPs and Message-ID</li></ul><div class="output">Output: Header assessment</div></article>
+        <article class="step"><span class="step-number">04</span><h3>Sender and content analysis</h3><p>Assess sender legitimacy and identify the social-engineering lure.</p><h4>Look for</h4><ul><li>Free-mail or lookalike domains</li><li>Brand impersonation and trust building</li><li>Urgency, incentives, credential or payment requests</li></ul><div class="output">Output: Sender trust and lure assessment</div></article>
+        <article class="step"><span class="step-number">05</span><h3>IOC extraction</h3><p>Extract and safely document email addresses, domains, IPs, URLs, attachment names and hashes.</p><h4>Safety</h4><ul><li>Defang all reportable IOCs.</li><li>Separate attacker-context IOCs from legitimate references.</li><li>Do not classify “unknown” as malicious.</li></ul><div class="output">Output: Defanged IOC table</div></article>
+        <article class="step"><span class="step-number">06</span><h3>URL and attachment analysis</h3><p>Use reputation services first, then controlled behavioural analysis where justified.</p><h4>Determine</h4><ul><li>Redirect chain and final destination</li><li>Credential collection or file delivery</li><li>Macros, scripts and embedded links</li></ul><div class="output">Output: URL or attachment verdict</div></article>
+        <article class="step"><span class="step-number">07</span><h3>Threat intelligence</h3><p>Corroborate IOCs using multiple reputable sources and record the exact verdict returned.</p><h4>Verdict language</h4><ul><li>Malicious, suspicious, clean, unknown or unavailable</li><li>Include lookup date and source</li><li>Explain confidence and limitations</li></ul><div class="output">Output: Threat-intelligence assessment</div></article>
+        <article class="step"><span class="step-number">08</span><h3>Scope investigation</h3><p>Search the monitored environment for the same sender, subject, domain, URL, Message-ID and related lure themes.</p><h4>Answer</h4><ul><li>How many known recipients?</li><li>Were similar messages found?</li><li>Is there evidence of a wider campaign?</li></ul><div class="output">Output: Scope findings with query evidence</div></article>
+        <article class="step"><span class="step-number">09</span><h3>User activity and impact</h3><p>Validate what the user did and distinguish user statements from technical telemetry.</p><h4>Check</h4><ul><li>Email opened, link clicked or attachment opened</li><li>Credentials entered or suspicious sign-ins</li><li>Mailbox rules, forwarding and OAuth consent</li></ul><div class="output">Output: Exposure and impact assessment</div></article>
+        <article class="step"><span class="step-number">10</span><h3>Classify and respond</h3><p>Choose a verdict supported by evidence, then complete actions within the analyst’s authority.</p><h4>Possible verdicts</h4><ul><li>Benign, spam, suspicious or likely phishing</li><li>Confirmed phishing only with confirmed malicious behaviour</li><li>BEC when financial or account-takeover activity is present</li></ul><div class="output">Output: Classification, containment and recovery</div></article>
+        <article class="step"><span class="step-number">11</span><h3>Report and recommend</h3><p>Summarise what happened, what was proven, what remains unknown and what the organisation should improve.</p><h4>Remember</h4><ul><li>Analyst tasks belong under actions taken.</li><li>Recommendations should target enduring controls.</li><li>Defang every IOC in the final report.</li></ul><div class="output">Output: Final SOC investigation report</div></article>
+      </div>
+    </section>
+
+    <section class="section alt" id="tools">
+      <div class="section-heading"><span class="eyebrow">Tools and why they are used</span><h2>Investigation toolkit</h2></div>
+      <div class="tool-grid">
+        <article><h3>Microsoft Defender</h3><p>Email telemetry, Advanced Hunting, scope analysis, Safe Links clicks and post-delivery activity.</p></article>
+        <article><h3>Kusto Query Language</h3><p>Search sender, subject, recipient and URL telemetry while preserving reproducible evidence.</p></article>
+        <article><h3>VirusTotal</h3><p>URL, domain, IP and file reputation enrichment. A zero score does not prove safety.</p></article>
+        <article><h3>AbuseIPDB</h3><p>IP reputation context and abuse reports. Treat shared cloud-provider IPs with care.</p></article>
+        <article><h3>URLScan / sandbox</h3><p>Controlled page rendering, redirect analysis, screenshots and destination behaviour.</p></article>
+        <article><h3>SpamAssassin</h3><p>Rule telemetry and message scoring that supports—but does not independently prove—a phishing verdict.</p></article>
+        <article><h3>CyberChef</h3><p>Decode quoted-printable, Base64, URLs and other encoded content in a controlled workspace.</p></article>
+        <article><h3>MITRE ATT&CK</h3><p>Standardise technique mapping when the observed behaviour supports the selected technique.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="queries">
+      <div class="section-heading"><span class="eyebrow">Reproducible evidence</span><h2>Microsoft Defender scope-hunting examples</h2><p>Adjust the retention window and fields for your tenant. Store screenshots or exported results with the case.</p></div>
+      <div class="code-card"><div class="code-title"><span>Subject search</span><button data-copy="#q1">Copy</button></div><pre id="q1"><code>EmailEvents
+| where Timestamp &gt; ago(35d)
+| where Subject contains "Collab for Your YT Channel"
+| project Timestamp, SenderFromAddress, RecipientEmailAddress,
+          Subject, DeliveryAction, DeliveryLocation
+| order by Timestamp desc</code></pre></div>
+      <div class="code-card"><div class="code-title"><span>Sender search</span><button data-copy="#q2">Copy</button></div><pre id="q2"><code>EmailEvents
+| where Timestamp &gt; ago(35d)
+| where SenderFromAddress =~ "a01072207072@gmail.com"
+   or SenderMailFromAddress =~ "a01072207072@gmail.com"
+| project Timestamp, SenderFromAddress, SenderMailFromAddress,
+          RecipientEmailAddress, Subject, DeliveryAction,
+          DeliveryLocation, NetworkMessageId
+| order by Timestamp desc</code></pre></div>
+      <div class="code-card"><div class="code-title"><span>URL click search</span><button data-copy="#q3">Copy</button></div><pre id="q3"><code>UrlClickEvents
+| where Timestamp &gt; ago(35d)
+| where Url contains "shor.by"
+| project Timestamp, AccountUpn, Url, ActionType, Workload
+| order by Timestamp desc</code></pre></div>
+    </section>
+
+    <section class="section alt" id="case-study">
+      <div class="case-layout">
+        <div>
+          <span class="eyebrow">Portfolio example</span>
+          <h2>Shure creator-partnership phishing investigation</h2>
+          <p>This worked example demonstrates the playbook using a partnership-themed email sent from a Gmail account and containing an external CTA link.</p>
+          <div class="finding-list">
+            <div><strong>Classification</strong><span>Likely phishing</span></div>
+            <div><strong>Confidence</strong><span>Medium</span></div>
+            <div><strong>Known recipient</strong><span>1</span></div>
+            <div><strong>Additional recipients</strong><span>None identified in Defender telemetry</span></div>
+            <div><strong>User impact</strong><span>Email opened; no click evidence</span></div>
+            <div><strong>URL reputation</strong><span>0 detections at time checked</span></div>
+          </div>
+          <div class="hero-actions">
+            <a class="button" href="case-study.html">Read the case study</a>
+            <a class="button button-ghost" href="assets/docs/phishing-investigation-report.pdf" target="_blank">Open submitted report</a>
+          </div>
+        </div>
+        <img class="case-image" src="assets/images/site-concept.png" alt="Concept illustration of the SOC investigation playbook website.">
+      </div>
+    </section>
+
+    <section class="section" id="reporting">
+      <div class="section-heading"><span class="eyebrow">Final reporting</span><h2>Write conclusions that can be traced to evidence</h2></div>
+      <div class="report-grid">
+        <article class="card"><h3>Observation</h3><p>The message contained a CTA linking to <code>hxxps://shor[.]by/shure</code>.</p></article>
+        <article class="card"><h3>Evidence</h3><p>The sender used a Gmail account while claiming Shure affiliation; VirusTotal returned no malicious detections.</p></article>
+        <article class="card"><h3>Conclusion</h3><p>Likely phishing with medium confidence; malicious destination behaviour was not confirmed.</p></article>
+        <article class="card"><h3>Recommendation</h3><p>Strengthen mail controls for brand impersonation and external CTA links, and maintain user awareness for sponsorship lures.</p></article>
+      </div>
+      <div class="callout"><strong>Golden rule:</strong> Observation → Evidence → Conclusion. If a claim cannot be traced to documented evidence, label it as unknown or not confirmed.</div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built as a junior SOC analyst portfolio project. Replace the placeholder GitHub URL and author details before publishing.</p>
+    <p><a href="#overview">Back to top ↑</a></p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
