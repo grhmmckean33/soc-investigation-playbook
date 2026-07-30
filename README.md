@@ -1,4 +1,4 @@
-# SOC Phishing Investigation Playbook
+# SOC Investigation Playbook
 
 This repository documents a repeatable methodology for investigating phishing emails in a Security Operations Centre (SOC) environment.
 
